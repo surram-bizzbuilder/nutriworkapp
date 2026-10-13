@@ -49,3 +49,18 @@ test('after a low-protein breakfast, lunch plan carries more protein and respect
   assert.ok(kcal > plan.target.kcal * 0.75 && kcal < plan.target.kcal * 1.15, `plate ${kcal} vs ${plan.target.kcal}`);
   console.log(plan.plate.map((p) => `${p.grams}g ${p.food.name}`).join(', '), Math.round(plan.plateTotals.protein), '/', Math.round(plan.target.protein));
 });
+
+test('reminders skip meals already logged and carry the plan', async () => {
+  const { planReminders } = await import('../reminderPlan');
+  const t = computeTargets(profile);
+  const now = new Date('2026-10-13T09:00:00');
+  const r = planReminders(profile, t, [entry('oats', 60, 'breakfast')], now);
+  const today = r.filter((x) => x.date.getDate() === 13);
+  assert.ok(!today.some((x) => x.title.startsWith('Breakfast')));
+  const lunch = today.find((x) => x.title.startsWith('Lunch'))!;
+  assert.match(lunch.body, /kcal and \d+ g protein/);
+  assert.equal(lunch.date.getHours(), 13);
+  assert.equal(lunch.date.getMinutes(), 30);
+  assert.equal(r.filter((x) => x.date.getDate() === 14).length, 3);
+  assert.equal(planReminders({ ...profile, remindersOn: false }, t, [], now).length, 0);
+});

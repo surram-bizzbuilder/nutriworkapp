@@ -25,7 +25,18 @@
       "output": "single"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-notifications",
+        {}
+      ],
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "NutriWork uses the camera so you can photograph meals and ingredients.",
+          "photosPermission": "NutriWork reads photos you pick of meals and ingredients."
+        }
+      ]
     ],
     "scheme": "nutriwork"
   }

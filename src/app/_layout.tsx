@@ -2,6 +2,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { ReminderSync } from '../components/ReminderSync';
 import { colors } from '../components/ui';
 import { StoreProvider } from '../lib/store';
 
@@ -10,6 +11,7 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <StoreProvider>
         <StatusBar style="dark" />
+        <ReminderSync />
         <Stack
           screenOptions={{
             headerStyle: { backgroundColor: colors.bg },
