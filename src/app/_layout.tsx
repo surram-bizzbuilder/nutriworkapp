@@ -8,14 +8,16 @@ import { StoreProvider } from '../lib/store';
 
 export default function RootLayout() {
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={{ backgroundColor: colors.bg }}>
       <StoreProvider>
-        <StatusBar style="dark" />
+        <StatusBar style="light" />
         <ReminderSync />
         <Stack
           screenOptions={{
             headerStyle: { backgroundColor: colors.bg },
             headerTintColor: colors.ink,
+            headerTitleAlign: 'center',
+            headerTitleStyle: { fontWeight: '600' },
             headerShadowVisible: false,
             contentStyle: { backgroundColor: colors.bg },
           }}

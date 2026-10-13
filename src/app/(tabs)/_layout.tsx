@@ -13,9 +13,23 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.brand,
+        tabBarActiveTintColor: colors.ink,
         tabBarInactiveTintColor: colors.muted,
-        tabBarStyle: { backgroundColor: colors.card, borderTopColor: colors.line },
+        // Inset rounded bar with a raised pill behind the active tab.
+        tabBarStyle: {
+          backgroundColor: colors.bgRaised,
+          borderTopWidth: 0,
+          borderRadius: 34,
+          marginHorizontal: 16,
+          marginBottom: 16,
+          height: 68,
+          paddingHorizontal: 6,
+          paddingTop: 6,
+          paddingBottom: 6,
+        },
+        tabBarItemStyle: { borderRadius: 28, marginHorizontal: 2, overflow: 'hidden' },
+        tabBarActiveBackgroundColor: colors.cardStrong,
+        tabBarLabelStyle: { fontSize: 11, fontWeight: '500' },
         sceneStyle: { backgroundColor: colors.bg },
       }}
     >

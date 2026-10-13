@@ -2,23 +2,29 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, TextInput, TextInputProps, View, ViewStyle } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 
+// Dark graphite "glass" theme with an orange accent.
 export const colors = {
-  bg: '#F6F7F2',
-  card: '#FFFFFF',
-  ink: '#1D2421',
-  muted: '#66706B',
-  line: '#E3E7E0',
-  brand: '#2E7D5B',
-  brandSoft: '#DDEFE5',
-  accent: '#F2994A',
-  accentSoft: '#FDEBDB',
-  danger: '#C2483D',
-  dangerSoft: '#F8DEDB',
-  protein: '#5B7FDB',
-  carbs: '#E2A93B',
-  fat: '#D46A8C',
-  fiber: '#4FA37A',
+  bg: '#1B1D1F',
+  bgRaised: '#26292C',
+  card: 'rgba(255,255,255,0.06)',
+  cardStrong: 'rgba(255,255,255,0.11)',
+  ink: '#FFFFFF',
+  muted: '#9A9EA3',
+  line: 'rgba(255,255,255,0.09)',
+  brand: '#F25C14',
+  brandSoft: 'rgba(242,92,20,0.16)',
+  onBrand: '#FFFFFF',
+  accent: '#FFB37A',
+  accentSoft: 'rgba(255,179,122,0.12)',
+  danger: '#FF6B5E',
+  dangerSoft: 'rgba(255,107,94,0.14)',
+  protein: '#F25C14',
+  carbs: '#F3D2B3',
+  fat: '#B9BDC2',
+  fiber: '#7BC79A',
 };
+
+export const radius = { card: 26, control: 999, field: 20 };
 
 export const space = (n: number) => n * 4;
 
@@ -64,7 +70,7 @@ export function Button({
         style,
       ]}
     >
-      <Text style={[styles.buttonText, variant !== 'primary' && { color: colors.brand }]}>{title}</Text>
+      <Text style={[styles.buttonText, variant === 'ghost' && { color: colors.muted }]}>{title}</Text>
     </Pressable>
   );
 }
@@ -113,7 +119,7 @@ export function Ring({ value, max, size = 140, stroke = 12, children }: { value:
   return (
     <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
       <Svg width={size} height={size} style={{ position: 'absolute' }}>
-        <Circle cx={size / 2} cy={size / 2} r={r} stroke={colors.line} strokeWidth={stroke} fill="none" />
+        <Circle cx={size / 2} cy={size / 2} r={r} stroke={colors.cardStrong} strokeWidth={stroke} fill="none" />
         <Circle
           cx={size / 2}
           cy={size / 2}
@@ -135,29 +141,29 @@ export function Ring({ value, max, size = 140, stroke = 12, children }: { value:
 export const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.card,
-    borderRadius: 16,
-    padding: space(4),
+    borderRadius: radius.card,
+    padding: space(5),
     marginBottom: space(3),
     borderWidth: 1,
     borderColor: colors.line,
   },
-  h1: { fontSize: 26, fontWeight: '700', color: colors.ink, marginBottom: space(1) },
-  h2: { fontSize: 18, fontWeight: '700', color: colors.ink, marginBottom: space(2) },
+  h1: { fontSize: 30, fontWeight: '600', color: colors.ink, marginBottom: space(1), letterSpacing: -0.5 },
+  h2: { fontSize: 19, fontWeight: '600', color: colors.ink, marginBottom: space(2), letterSpacing: -0.2 },
   muted: { color: colors.muted, fontSize: 14, lineHeight: 20 },
   button: {
     backgroundColor: colors.brand,
-    paddingVertical: space(3.5),
-    paddingHorizontal: space(5),
-    borderRadius: 12,
+    paddingVertical: space(4),
+    paddingHorizontal: space(3),
+    borderRadius: radius.control,
     alignItems: 'center',
   },
-  buttonSecondary: { backgroundColor: colors.brandSoft },
+  buttonSecondary: { backgroundColor: colors.cardStrong, borderWidth: 1, borderColor: colors.line },
   buttonGhost: { backgroundColor: 'transparent' },
-  buttonText: { color: '#fff', fontWeight: '700', fontSize: 16 },
+  buttonText: { color: colors.onBrand, fontWeight: '600', fontSize: 16 },
   chip: {
-    paddingVertical: space(2),
-    paddingHorizontal: space(3.5),
-    borderRadius: 999,
+    paddingVertical: space(2.5),
+    paddingHorizontal: space(4),
+    borderRadius: radius.control,
     borderWidth: 1,
     borderColor: colors.line,
     backgroundColor: colors.card,
@@ -166,21 +172,22 @@ export const styles = StyleSheet.create({
   },
   chipSelected: { backgroundColor: colors.brand, borderColor: colors.brand },
   chipText: { color: colors.ink, fontSize: 14 },
-  chipTextSelected: { color: '#fff', fontWeight: '600' },
-  label: { fontSize: 14, fontWeight: '600', color: colors.ink, marginBottom: space(1.5) },
+  chipTextSelected: { color: colors.onBrand, fontWeight: '600' },
+  label: { fontSize: 13, fontWeight: '500', color: colors.muted, marginBottom: space(2), letterSpacing: 0.2 },
   inputRow: {
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
     borderColor: colors.line,
-    borderRadius: 12,
+    borderRadius: radius.field,
     backgroundColor: colors.card,
-    paddingHorizontal: space(3),
+    paddingHorizontal: space(4),
   },
-  input: { flex: 1, paddingVertical: space(3), fontSize: 16, color: colors.ink },
+  // outlineWidth hides the browser focus ring in the web preview.
+  input: { flex: 1, paddingVertical: space(3.5), fontSize: 16, color: colors.ink, outlineWidth: 0 },
   suffix: { color: colors.muted, marginLeft: space(2) },
-  track: { height: 8, borderRadius: 4, backgroundColor: colors.line, overflow: 'hidden' },
-  fill: { height: 8, borderRadius: 4 },
+  track: { height: 6, borderRadius: 3, backgroundColor: colors.cardStrong, overflow: 'hidden' },
+  fill: { height: 6, borderRadius: 3 },
   row: { flexDirection: 'row', alignItems: 'center' },
   wrap: { flexDirection: 'row', flexWrap: 'wrap' },
 });

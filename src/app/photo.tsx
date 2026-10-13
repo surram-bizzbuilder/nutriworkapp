@@ -85,7 +85,7 @@ export default function PhotoLog() {
         </Card>
       ) : null}
 
-      {image ? <Image source={{ uri: image.uri }} style={{ width: '100%', height: 220, borderRadius: 16, marginBottom: space(3) }} /> : null}
+      {image ? <Image source={{ uri: image.uri }} style={{ width: '100%', height: 220, borderRadius: 26, marginBottom: space(3) }} /> : null}
 
       {busy ? (
         <Card style={{ alignItems: 'center' }}>

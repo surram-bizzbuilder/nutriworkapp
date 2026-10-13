@@ -67,27 +67,41 @@ export default function Today() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }} edges={['top']}>
       <ScrollView contentContainerStyle={{ padding: space(4), paddingBottom: space(12) }}>
-        <View style={[styles.row, { justifyContent: 'space-between', marginBottom: space(4) }]}>
+        <View style={[styles.row, { justifyContent: 'space-between', marginBottom: space(1) }]}>
           <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 24, fontWeight: '700', color: colors.ink }}>{`${greeting(now)}, ${profile.name}`}</Text>
-            <Muted>{now.toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' })}</Muted>
+            <Muted>{greeting(now)}</Muted>
+            <Text style={{ fontSize: 30, fontWeight: '600', color: colors.ink, letterSpacing: -0.5 }}>{profile.name}</Text>
           </View>
-          <View style={{ backgroundColor: colors.accentSoft, borderRadius: 12, paddingHorizontal: space(3), paddingVertical: space(2), alignItems: 'center' }}>
-            <Text style={{ fontSize: 18, fontWeight: '800', color: colors.accent }}>{`🔥 ${streak}`}</Text>
-            <Text style={{ fontSize: 11, color: colors.accent }}>day streak</Text>
+          <View style={{ width: 48, height: 48, borderRadius: 24, backgroundColor: colors.cardStrong, borderWidth: 1, borderColor: colors.line, alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={{ color: colors.ink, fontSize: 18, fontWeight: '600' }}>{profile.name.slice(0, 1).toUpperCase()}</Text>
+          </View>
+        </View>
+
+        <View style={[styles.row, { marginTop: space(3), marginBottom: space(4) }]}>
+          <View style={{ backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line, borderRadius: 999, paddingHorizontal: space(3.5), paddingVertical: space(2), marginRight: space(2) }}>
+            <Text style={{ color: colors.ink, fontSize: 13 }}>{now.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' })}</Text>
+          </View>
+          <View style={{ backgroundColor: colors.card, borderWidth: 1, borderColor: colors.line, borderRadius: 999, paddingHorizontal: space(3.5), paddingVertical: space(2) }}>
+            <Text style={{ color: colors.ink, fontSize: 13 }}>
+              {`🔥 ${streak} `}
+              <Text style={{ color: colors.muted }}>day streak</Text>
+            </Text>
           </View>
         </View>
 
         <Pressable
           accessibilityRole="button"
           onPress={() => router.push({ pathname: '/photo', params: next ? { meal: next.meal } : {} })}
-          style={({ pressed }) => [{ backgroundColor: colors.ink, borderRadius: 14, padding: space(3.5), marginBottom: space(3), flexDirection: 'row', alignItems: 'center', opacity: pressed ? 0.85 : 1 }]}
+          style={({ pressed }) => [{ backgroundColor: colors.brand, borderRadius: 999, padding: space(1.5), paddingRight: space(5), marginBottom: space(3), flexDirection: 'row', alignItems: 'center', opacity: pressed ? 0.85 : 1 }]}
         >
-          <Text style={{ fontSize: 22, marginRight: space(3) }}>📷</Text>
-          <View style={{ flex: 1 }}>
-            <Text style={{ color: '#fff', fontWeight: '700', fontSize: 16 }}>Snap your plate</Text>
-            <Text style={{ color: '#C9D1CC' }}>We'll weigh every item, oil included</Text>
+          <View style={{ width: 52, height: 52, borderRadius: 26, backgroundColor: 'rgba(255,255,255,0.22)', alignItems: 'center', justifyContent: 'center', marginRight: space(3) }}>
+            <Text style={{ fontSize: 22 }}>📷</Text>
           </View>
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: colors.onBrand, fontWeight: '600', fontSize: 16 }}>Snap your plate</Text>
+            <Text style={{ color: 'rgba(255,255,255,0.75)', fontSize: 13 }}>We'll weigh every item, oil included</Text>
+          </View>
+          <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 18, letterSpacing: -4 }}>{'›››'}</Text>
         </Pressable>
 
         <Card style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -112,7 +126,7 @@ export default function Today() {
           <Pressable
             accessibilityRole="button"
             onPress={() => router.push({ pathname: '/log', params: { meal: missed[0] } })}
-            style={{ backgroundColor: colors.accentSoft, borderRadius: 12, padding: space(3), marginBottom: space(3) }}
+            style={{ backgroundColor: colors.accentSoft, borderRadius: 20, padding: space(4), marginBottom: space(3) }}
           >
             <Text style={{ color: colors.ink }}>
               {`Forgot to log ${missed.map((m) => MEAL_LABEL[m].toLowerCase()).join(' and ')}? `}
@@ -123,20 +137,20 @@ export default function Today() {
         ) : null}
 
         {next ? (
-          <Card style={{ borderColor: colors.brand, borderWidth: 1.5 }}>
-            <Text style={{ color: colors.brand, fontWeight: '700', marginBottom: space(1) }}>{`NEXT UP · ${MEAL_LABEL[next.meal].toUpperCase()}`}</Text>
+          <Card style={{ backgroundColor: colors.cardStrong }}>
+            <Text style={{ color: colors.brand, fontWeight: '600', fontSize: 12, letterSpacing: 1, marginBottom: space(1.5) }}>{`NEXT UP · ${MEAL_LABEL[next.meal].toUpperCase()}`}</Text>
             <H2>{`Aim for about ${Math.round(next.target.kcal)} kcal and ${Math.round(next.target.protein)} g protein`}</H2>
             {next.focus.map((f) => (
               <View
                 key={f.key}
                 style={{
                   backgroundColor: f.tone === 'limit' ? colors.dangerSoft : colors.brandSoft,
-                  borderRadius: 10,
-                  padding: space(2.5),
+                  borderRadius: 16,
+                  padding: space(3),
                   marginBottom: space(2),
                 }}
               >
-                <Text style={{ color: f.tone === 'limit' ? colors.danger : colors.brand }}>{f.message}</Text>
+                <Text style={{ color: f.tone === 'limit' ? colors.danger : colors.ink }}>{f.message}</Text>
               </View>
             ))}
             {next.plate.length ? (
@@ -181,9 +195,9 @@ export default function Today() {
                   accessibilityRole="button"
                   accessibilityLabel={`Add food to ${MEAL_LABEL[m]}`}
                   onPress={() => router.push({ pathname: '/log', params: { meal: m } })}
-                  style={{ backgroundColor: colors.brandSoft, borderRadius: 999, width: 36, height: 36, alignItems: 'center', justifyContent: 'center' }}
+                  style={{ backgroundColor: colors.cardStrong, borderRadius: 999, width: 40, height: 40, alignItems: 'center', justifyContent: 'center' }}
                 >
-                  <Text style={{ color: colors.brand, fontSize: 22, fontWeight: '700', marginTop: -2 }}>+</Text>
+                  <Text style={{ color: colors.ink, fontSize: 22, fontWeight: '400', marginTop: -2 }}>+</Text>
                 </Pressable>
               </View>
               {items.map((e) => (

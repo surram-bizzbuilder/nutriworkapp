@@ -126,7 +126,7 @@ export default function LogMeal() {
               onChangeText={setQuery}
               placeholder="Search foods: dal, egg, roti, chicken…"
               placeholderTextColor={colors.muted}
-              style={{ backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: colors.line, padding: space(3), fontSize: 16, color: colors.ink }}
+              style={{ backgroundColor: colors.card, borderRadius: 999, borderWidth: 1, borderColor: colors.line, paddingVertical: space(3), paddingHorizontal: space(4.5), fontSize: 16, color: colors.ink, outlineWidth: 0 }}
             />
           </View>
           <FlatList

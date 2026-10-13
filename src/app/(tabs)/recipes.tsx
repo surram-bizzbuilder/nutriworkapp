@@ -54,8 +54,8 @@ export default function Recipes() {
 
         <Pressable accessibilityRole="button" onPress={() => router.push('/pantry')}>
           <Card style={{ backgroundColor: colors.brand, borderColor: colors.brand }}>
-            <Text style={{ color: '#fff', fontSize: 17, fontWeight: '700' }}>📸  What can I cook with what I have?</Text>
-            <Text style={{ color: '#E8F5EE', marginTop: space(1) }}>Snap your ingredients and get the most nutritious dish you can make.</Text>
+            <Text style={{ color: colors.onBrand, fontSize: 17, fontWeight: '600' }}>📸  What can I cook with what I have?</Text>
+            <Text style={{ color: 'rgba(255,255,255,0.8)', marginTop: space(1) }}>Snap your ingredients and get the most nutritious dish you can make.</Text>
           </Card>
         </Pressable>
 
