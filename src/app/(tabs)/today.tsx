@@ -78,6 +78,18 @@ export default function Today() {
           </View>
         </View>
 
+        <Pressable
+          accessibilityRole="button"
+          onPress={() => router.push({ pathname: '/photo', params: next ? { meal: next.meal } : {} })}
+          style={({ pressed }) => [{ backgroundColor: colors.ink, borderRadius: 14, padding: space(3.5), marginBottom: space(3), flexDirection: 'row', alignItems: 'center', opacity: pressed ? 0.85 : 1 }]}
+        >
+          <Text style={{ fontSize: 22, marginRight: space(3) }}>📷</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: '#fff', fontWeight: '700', fontSize: 16 }}>Snap your plate</Text>
+            <Text style={{ color: '#C9D1CC' }}>We'll weigh every item, oil included</Text>
+          </View>
+        </Pressable>
+
         <Card style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Ring value={day.consumed.kcal} max={t.kcal}>
             <Text style={{ fontSize: 26, fontWeight: '800', color: colors.ink }}>{Math.max(0, Math.round(day.remaining.kcal))}</Text>

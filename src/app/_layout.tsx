@@ -24,6 +24,9 @@ export default function RootLayout() {
           <Stack.Screen name="onboarding" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="log" options={{ title: 'Log a meal', presentation: 'modal' }} />
+          <Stack.Screen name="photo" options={{ title: 'Snap your plate', presentation: 'modal' }} />
+          <Stack.Screen name="pantry" options={{ title: 'Cook from what I have' }} />
+          <Stack.Screen name="recipe/[id]" options={{ title: 'Recipe' }} />
         </Stack>
       </StoreProvider>
     </SafeAreaProvider>

@@ -19,12 +19,28 @@ meal you log it plans the next one so the day ends balanced.
 - **Next-meal guidance** (`src/lib/guidance.ts`): splits what's left of the day across the
   remaining meals, flags nutrients that are lagging or over the limit, and builds a realistic
   plate (base + protein + vegetables + side) in grams that fits your diet, allergies and cuisines.
-- **Consistency**: day streak and a nudge for meals you forgot to log.
+- **Consistency**: day streak, a nudge for meals you forgot to log, and meal reminders
+  (`src/lib/reminders.ts`) that are rescheduled whenever you log, so a meal you've already
+  logged never nags and each reminder carries your current target for that meal.
+- **Snap your plate** (`src/app/photo.tsx`): Claude vision identifies each food, estimates grams
+  and the oil/ghee used, and maps it to the food table; you can adjust every portion before saving.
+- **Cook** tab: 13 step-by-step recipes with computed nutrition per serving, sorted by how well
+  they fit your next meal, plus a large-type cooking mode.
+- **Cook from what I have** (`src/app/pantry.tsx`): photograph your ingredients and get the dish
+  that best fills your next meal's target, with steps.
 
-## Coming next
+## Photo features need the small backend
 
-Photo recognition of meals with gram estimates (including oil), meal reminders, recipes with
-step-by-step cooking, and "photo of my ingredients → best dish".
+The app never holds an AI key. Run the server in `server/` and point the app at it:
+
+```bash
+cd server && npm install
+ANTHROPIC_API_KEY=... npm start                # listens on :8787
+# in another terminal, from the project root:
+EXPO_PUBLIC_API_URL=http://<your-computer-ip>:8787 npx expo start
+```
+
+On an Android emulator the host machine is `http://10.0.2.2:8787`.
 
 ## Run it
 

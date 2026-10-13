@@ -115,12 +115,17 @@ export default function LogMeal() {
       ) : (
         <>
           <View style={{ paddingHorizontal: space(4) }}>
+            <Button
+              title="📷  Snap your plate instead"
+              variant="secondary"
+              onPress={() => router.replace({ pathname: '/photo', params: { meal } })}
+              style={{ marginBottom: space(3) }}
+            />
             <TextInput
               value={query}
               onChangeText={setQuery}
               placeholder="Search foods: dal, egg, roti, chicken…"
               placeholderTextColor={colors.muted}
-              autoFocus
               style={{ backgroundColor: colors.card, borderRadius: 12, borderWidth: 1, borderColor: colors.line, padding: space(3), fontSize: 16, color: colors.ink }}
             />
           </View>

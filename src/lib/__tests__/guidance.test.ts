@@ -64,3 +64,22 @@ test('reminders skip meals already logged and carry the plan', async () => {
   assert.equal(r.filter((x) => x.date.getDate() === 14).length, 3);
   assert.equal(planReminders({ ...profile, remindersOn: false }, t, [], now).length, 0);
 });
+
+test('photo results log the food and its cooking oil separately', async () => {
+  const { photoEntries } = await import('../photoLog');
+  let n = 0;
+  const entries = photoEntries(
+    [
+      { name: 'Dal', catalogueId: 'dal_toor', grams: 150, per100g: null, cookingFat: { catalogueId: 'ghee', grams: 5 }, confidence: 'high' },
+      { name: 'Veg biryani', catalogueId: null, grams: 250, per100g: { kcal: 160, protein: 3.5, carbs: 28, fat: 3, fiber: 2, sugar: 2, satFat: 0.6, sodium: 350 }, cookingFat: null, confidence: 'medium' },
+    ],
+    'lunch',
+    '2026-10-13',
+    () => String(++n),
+  );
+  assert.equal(entries.length, 3);
+  assert.equal(entries[1].foodId, 'ghee');
+  assert.equal(Math.round(entries[1].nutrients.kcal), 45);
+  assert.equal(entries[2].nutrients.kcal, 400);
+  assert.equal(entries[2].nutrients.iron, 0);
+});

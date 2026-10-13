@@ -20,6 +20,7 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen name="today" options={{ title: 'Today', tabBarIcon: icon('🥗') }} />
+      <Tabs.Screen name="recipes" options={{ title: 'Cook', tabBarIcon: icon('🍳') }} />
       <Tabs.Screen name="nutrients" options={{ title: 'Nutrients', tabBarIcon: icon('📊') }} />
       <Tabs.Screen name="profile" options={{ title: 'Profile', tabBarIcon: icon('👤') }} />
     </Tabs>

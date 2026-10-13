@@ -175,7 +175,8 @@ function buildFocus(consumed: Nutrients, target: Nutrients, logged: MealSlot[]):
   return out;
 }
 
-function score(got: Nutrients, need: Nutrients): number {
+// Lower is better: how far `got` is from `need` (shortfalls on goals, overshoot on limits).
+export function score(got: Nutrients, need: Nutrients): number {
   let s = 0;
   for (const k of NUTRIENT_KEYS) {
     const n = need[k];
