@@ -40,15 +40,19 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         const [p, l] = await Promise.all([AsyncStorage.getItem(PROFILE_KEY), AsyncStorage.getItem(LOG_KEY)]);
         if (p) setProfile(JSON.parse(p));
         if (l) setEntries(JSON.parse(l));
+      } catch {
+        // Start fresh if storage is unreadable.
       } finally {
         setReady(true);
       }
     })();
   }, []);
 
+  // Storage can be unavailable (private browsing, blocked site data); the app keeps
+  // working in memory rather than failing the action.
   const saveProfile = useCallback(async (p: Profile) => {
     setProfile(p);
-    await AsyncStorage.setItem(PROFILE_KEY, JSON.stringify(p));
+    await AsyncStorage.setItem(PROFILE_KEY, JSON.stringify(p)).catch(() => {});
   }, []);
 
   const persistEntries = useCallback((next: LogEntry[]) => {
@@ -67,7 +71,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   );
 
   const resetAll = useCallback(async () => {
-    await AsyncStorage.multiRemove([PROFILE_KEY, LOG_KEY]);
+    await AsyncStorage.multiRemove([PROFILE_KEY, LOG_KEY]).catch(() => {});
     setProfile(undefined);
     setEntries([]);
   }, []);
